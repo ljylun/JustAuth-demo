@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM openjdk:17-jdk-alpine
 
 # 作者
 MAINTAINER yadong.zhang <yadong.zhang0415@gmail.com>

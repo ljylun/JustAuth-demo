@@ -18,7 +18,6 @@ import java.util.concurrent.TimeUnit;
  * @date 2019/10/24 13:38
  * @since 1.8
  */
-@Component
 public class AuthStateRedisCache implements AuthStateCache {
 
     @Autowired

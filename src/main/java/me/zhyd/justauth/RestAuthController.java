@@ -3,9 +3,9 @@ package me.zhyd.justauth;
 import com.alibaba.fastjson.JSONObject;
 import com.xkcoding.http.config.HttpConfig;
 import lombok.extern.slf4j.Slf4j;
-import me.zhyd.justauth.cache.AuthStateRedisCache;
 import me.zhyd.justauth.custom.AuthMyGitlabRequest;
 import me.zhyd.justauth.service.UserService;
+import me.zhyd.oauth.cache.AuthStateCache;
 import me.zhyd.oauth.config.AuthConfig;
 import me.zhyd.oauth.enums.scope.*;
 import me.zhyd.oauth.exception.AuthException;
@@ -45,7 +45,7 @@ import java.util.Map;
 public class RestAuthController {
 
     @Autowired
-    private AuthStateRedisCache stateRedisCache;
+    private AuthStateCache authStateCache;
     @Autowired
     private UserService userService;
 
@@ -167,7 +167,7 @@ public class RestAuthController {
                                 .timeout(15000)
                                 .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 10080)))
                                 .build())
-                        .build(), stateRedisCache);
+                        .build(), authStateCache);
                 break;
             case "gitee":
                 authRequest = new AuthGiteeRequest(AuthConfig.builder()
@@ -175,7 +175,7 @@ public class RestAuthController {
                         .clientSecret("")
                         .redirectUri("http://127.0.0.1:8443/oauth/callback/gitee")
                         .scopes(AuthScopeUtils.getScopes(AuthGiteeScope.values()))
-                        .build(), stateRedisCache);
+                        .build(), authStateCache);
                 break;
             case "weibo":
                 authRequest = new AuthWeiboRequest(AuthConfig.builder()
